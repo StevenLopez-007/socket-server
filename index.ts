@@ -1,22 +1,15 @@
-import Server from "./classes/server";
-import { router } from "./routes/router";
 import express from 'express';
-import cors from 'cors';
-
-const server = new Server();
-
-
-// Body Parser
-server.app.use(express.urlencoded({extended:true,limit:'25mb'}));
-server.app.use(express.json({limit:'25mb'}));
-
-// Cors
-server.app.use(cors({origin:true,credentials:true}))
-
-// Rutas
-server.app.use('/',router);
-
-
-server.start(()=>{
-    console.log(`El servidor esta en el puerto ${server.port}`)
+import Server from './classes/server';
+import { router } from './routes/router';
+//guardar las instalaciones con --save-dev para que sea solo usado en el desarrollo
+ 
+const server=Server.instance;
+ 
+server.app.use(express.urlencoded({extended:true}));
+server.app.use(express.json());//siemopre antes de las rutas
+//server.app.use(cors({origin:'*',credentials:true}));//cors permite que personas externas al dominio accedan al servicio
+server.app.use('/',router)
+ 
+server.iniciar(()=>{
+    console.log(`Servidor corriendo en el puerto ${server.port}`);
 })
