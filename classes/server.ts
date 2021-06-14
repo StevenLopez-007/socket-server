@@ -34,16 +34,19 @@ export default class Server{
         this.io.on('connection',(cliente)=>{
 
             // ConectarCliente
-            socket.conectarCliente(cliente)
+            socket.conectarCliente(cliente,this.io);
+
+            // Obtener usuarios
+            socket.obtenerUsuarios(cliente,this.io);
 
             // Configurar usuario
-            socket.configUsuario(cliente,this.io)
+            socket.configUsuario(cliente,this.io);
             
             // Mensaje
             socket.mensaje(cliente,this.io);
             
             // Desconectar
-            socket.desconectar(cliente);
+            socket.desconectar(cliente,this.io);
         });
     }
  
